@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http'
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { Product } from '../common/product';
-import {map} from 'rxjs/operators'              /*rxjs is reactive JavaScripts to map data comming from spring Data RESt in to pipe*/
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ProductCategory } from '../common/product-category';
 
 @Injectable({
@@ -16,42 +16,43 @@ export class ProductService {
 
   constructor(private httpClient: HttpClient) { }
 
+  getProductList(theCategoryId: number): Observable<Product[]> {
 
+    // need to build URL based on category id 
+    const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${theCategoryId}`;
 
-
-  getProductList(thecatergoryId: number): Observable<Product[]> {               /* getProductList() is a method and it will return Product[] array*/
-
-  const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${thecatergoryId}`;
-
-  
-    return this.httpClient.get<GetResponseProducts>(searchUrl).pipe(
-      map(response => response._embedded.products)                              /* Returns an observable Map the JSON data from Spring Data REST to product array*/
-    );
+    return this.getProducts(searchUrl);
   }
 
-  
+  searchProducts(theKeyword: string): Observable<Product[]> {
 
+    // need to build URL based on the keyword 
+    const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${theKeyword}`;
 
+    return this.getProducts(searchUrl);
+  }
 
-  getProductCategories(): Observable<ProductCategory[]>{
+  private getProducts(searchUrl: string): Observable<Product[]> {
+    return this.httpClient.get<GetResponseProducts>(searchUrl).pipe(map(response => response._embedded.products));
+  }
+
+  getProductCategories(): Observable<ProductCategory[]> {
 
     return this.httpClient.get<GetResponseProductCategory>(this.categoryUrl).pipe(
       map(response => response._embedded.productCategory)
-    )
-
+    );
   }
+
 }
 
 interface GetResponseProducts {
-  _embedded: {                                                /* Unwraps the JSON from Spring Data REST _embedded entry*/
+  _embedded: {
     products: Product[];
   }
 }
 
-
-
 interface GetResponseProductCategory {
-    _embedded: {                                                /* Unwraps the JSON from Spring Data REST _embedded entry*/
-      productCategory: ProductCategory[];
-    }
+  _embedded: {
+    productCategory: ProductCategory[];
+  }
 }

@@ -6,9 +6,11 @@ import { AppComponent } from './app.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { ProductService } from './services/product.service';
 import { Routes, RouterModule, RouterOutlet} from '@angular/router';
-import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component'
+import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
+import { SearchComponent } from './components/search/search.component'
 
 const routes: Routes = [
+  {path: 'search/:keyword', component: ProductListComponent},
   {path: 'category/:id', component: ProductListComponent},
   {path: 'category', component: ProductListComponent},                         /* category/:id -> is a path to match and when it matches,  it will gonna new instance of component -> ProductListComponent */
   {path: 'products', component: ProductListComponent},                         /* Order of the routed is important First match wins. Strart from most specific to generic. */
@@ -17,10 +19,10 @@ const routes: Routes = [
 ];
                                                                    
 
-@NgModule({
+@NgModule({ 
   declarations: [
     AppComponent,              
-    ProductListComponent, ProductCategoryMenuComponent
+    ProductListComponent, ProductCategoryMenuComponent, SearchComponent
   ],
   imports: [
     RouterModule,
