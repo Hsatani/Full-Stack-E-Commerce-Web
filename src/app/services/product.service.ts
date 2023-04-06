@@ -46,16 +46,16 @@ export class ProductService {
 
 
   //this method is used to get all product form backend and with pagination
-  getProductListPaginate( thePage: number,
-                          thePageSize: number,
-                          theCategoryId: number): Observable<GetResponseProducts> {
+  // getProductListPaginate( thePage: number,
+  //                         thePageSize: number,
+  //                         theCategoryId: number): Observable<GetResponseProducts> {
 
-    // need to build URL based on category id 
-    const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${theCategoryId}`
-                    +`?page=${thePage}&size=${thePageSize}`;
+  //   // need to build URL based on category id 
+  //   const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${theCategoryId}`
+  //                   +`?page=${thePage}&size=${thePageSize}`;
 
-    return this.httpClient.get<GetResponseProducts>(searchUrl);
-  }
+  //   return this.httpClient.get<GetResponseProducts>(searchUrl);
+  // }
 
 
 
@@ -89,12 +89,6 @@ export class ProductService {
 interface GetResponseProducts {
   _embedded: {
     products: Product[];
-  },
-  page: {
-    size: number,
-    totalElements: number,
-    totalPages: number,
-    number: number
   }
 }
 
@@ -103,3 +97,22 @@ interface GetResponseProductCategory {
     productCategory: ProductCategory[];
   }
 }
+
+
+// interface GetResponseProducts {
+//   _embedded: {
+//     products: Product[];
+//   },
+//   page: {
+//     size: number,
+//     totalElements: number,
+//     totalPages: number,
+//     number: number
+//   }
+// }
+
+// interface GetResponseProductCategory {
+//   _embedded: {
+//     productCategory: ProductCategory[];
+//   }
+// }
