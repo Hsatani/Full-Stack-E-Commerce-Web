@@ -17,25 +17,21 @@ export class CartService {
   constructor() { }
 
   addToCart(theCartItem: CartItem) {
+    
 
     // check if we already have the item in our cart
-    let alreadyExistsInCart: boolean = false;
-    let existingCartItem: CartItem = new CartItem(product: Product);
+   // let alreadyExistsInCart: boolean = false;
+    let existingCartItem: CartItem | undefined = undefined;
 
     if (this.cartItems.length > 0) {
       // find the item in the cart based on item id
 
-      for (let tempCartItem of this.cartItems) {
-        if (tempCartItem.id === theCartItem.id) {
-          existingCartItem = tempCartItem;
-          alreadyExistsInCart = true;
-          break;
-        }
-      }
+      existingCartItem = this.cartItems.find( tempCartItem => tempCartItem.id === theCartItem.id );
 
+ 
     }
 
-    if (alreadyExistsInCart) {
+    if (existingCartItem != undefined) {
       // increment the quantity
       existingCartItem.quantity++;
     }
@@ -83,6 +79,9 @@ export class CartService {
     theCartItem.quantity--;
     if(theCartItem.quantity === 0){
       this.remove(theCartItem);
+    }
+    else {
+      this.computeCartTotals();
     }
   }
   remove(theCartItem: CartItem) {

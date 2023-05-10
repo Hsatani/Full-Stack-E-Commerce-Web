@@ -17,11 +17,10 @@
                         </a>
                         
                         <div class="price">{{ tempProduct.unitPrice | currency:'USD' }}</div>
-                        <button (click) = "addToCart(tempProduct)" class="btn btn-primary btn-sm">Add to cart</button>
-                       
+                        <button (click)="addToCart(tempProduct)" class="btn btn-primary btn-sm">Add to cart</button>
                     </div>
 
-                </div> 
+                </div>
 
                 <!-- if products empty then display a message-->
                 <div *ngIf="products?.length == 0" class="alert alert-warning col-md-12" role="alert">
@@ -29,7 +28,6 @@
                 </div>
 
             </div>
-
             <!-- begin footer -->
             <div class="footer-pagination">
                 <div class="row">

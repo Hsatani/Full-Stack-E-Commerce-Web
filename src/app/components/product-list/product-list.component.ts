@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/common/product';
 import { ProductService } from 'src/app/services/product.service';
+import { CartItem } from 'src/app/common/cart-item';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-product-list',
@@ -20,8 +22,10 @@ export class ProductListComponent implements OnInit {
   thePageSize: number = 5;
   theTotalElements: number = 0;
   previousKeyword: string = "";
+ 
 
   constructor(private productService: ProductService,
+              private cartService: CartService,
               private route: ActivatedRoute ) { }           /* Injecting router -> our ProductService in to our ProductListComponent, Inject the ActivatedRoute*/
                                                             /* The current active route that loaded the component. Useful for accessing route parameters. */
   ngOnInit() {
@@ -117,10 +121,15 @@ export class ProductListComponent implements OnInit {
       this.theTotalElements = data.page.totalElements;
     };
   }
+  addToCart(theProduct: Product) {
+    
+    console.log(`Adding to cart: ${theProduct.name}, ${theProduct.unitPrice}`);
 
-    addToCart(theProduct: Product){
-      
-    }
+    // TODO ... do the real work
+    const theCartItem = new CartItem(theProduct);
+
+    this.cartService.addToCart(theCartItem);
+  }
 
 
 
